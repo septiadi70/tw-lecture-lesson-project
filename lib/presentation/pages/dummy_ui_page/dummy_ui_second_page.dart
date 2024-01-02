@@ -1,13 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:trinity_lecture_app/core/commons/theme.dart';
-import 'package:trinity_lecture_app/presentation/widgets/organisms/grid_sample_container_card.dart';
-import 'package:trinity_lecture_app/presentation/widgets/organisms/sample_container.dart';
+import 'package:trinity_lecture_app/core/commons/constants.dart';
+import 'package:trinity_lecture_app/presentation/pages/dummy_ui_page/widgets/dummy_grid_card.dart';
+import 'package:trinity_lecture_app/presentation/widgets/atoms/text_theme_extension.dart';
+import 'package:trinity_lecture_app/presentation/widgets/organisms/news_card.dart';
 import 'package:trinity_lecture_app/presentation/widgets/organisms/ui_helper.dart';
 
 @RoutePage()
-class DummySecondPage extends StatelessWidget {
-  const DummySecondPage({super.key});
+class DummyUISecondPage extends StatelessWidget {
+  const DummyUISecondPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +23,12 @@ class DummySecondPage extends StatelessWidget {
             tabs: [
               Text(
                 'ListView',
-                style: AppTheme.textTheme.headlineSmall,
+                style: context.textTheme.headlineSmall,
               ),
               Text(
                 'GridView',
-                style: AppTheme.textTheme.headlineSmall,
-              )
+                style: context.textTheme.headlineSmall,
+              ),
             ],
           ),
         ),
@@ -38,7 +39,7 @@ class DummySecondPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: UIHelper.padding(all: 10),
-                  child: const SampleContainer(),
+                  child: NewsCard(imgSrc: Constants.dummyImg, title: 'How can I be Flutter Developer Expert?', desc: 'Jill Lepore * 23 May 2023'),
                 );
             },),
             Padding(
@@ -50,12 +51,12 @@ class DummySecondPage extends StatelessWidget {
                 shrinkWrap: true,
                 childAspectRatio: 120/90,
                 children: List.generate(9, (index) {
-                  return GridSampleContainerCard(title: 'Container ${index + 1}');
+                  return DummyGridCard(title: 'Container ${index + 1}');
                 }),
               ),
             )
           ],
-        )
+        ),
       ),
     );
   }

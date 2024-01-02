@@ -1,17 +1,19 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:trinity_lecture_app/core/commons/constants.dart';
+import 'package:trinity_lecture_app/core/routes/app_router.gr.dart';
+import 'package:trinity_lecture_app/presentation/pages/dummy_ui_page/widgets/dummy_grid_card.dart';
 import 'package:trinity_lecture_app/presentation/widgets/atoms/title_section_text.dart';
 import 'package:trinity_lecture_app/presentation/widgets/molecules/action_text.dart';
-import 'package:trinity_lecture_app/presentation/widgets/organisms/grid_sample_container_card.dart';
-import 'package:trinity_lecture_app/presentation/widgets/organisms/sample_container.dart';
+import 'package:trinity_lecture_app/presentation/widgets/organisms/news_card.dart';
 import 'package:trinity_lecture_app/presentation/widgets/organisms/text_form_field.dart';
 import 'package:trinity_lecture_app/presentation/widgets/organisms/ui_helper.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 @RoutePage()
-class DummyPage extends StatelessWidget {
-  const DummyPage({super.key});
+class DummyUIFirstPage extends StatelessWidget {
+  const DummyUIFirstPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class DummyPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ActionText(
-                onTap: () => AutoRouter.of(context).pushNamed('/dummySecond'), 
+                onTap: () => AutoRouter.of(context).push(const DummyUISecondRoute()), 
                 title: 'Next', 
                 desc: 'Tab Bar, GridView, ListView',
               ),
@@ -35,7 +37,7 @@ class DummyPage extends StatelessWidget {
                 'CONTAINER AND TEXT',
               ),
               UIHelper.verticalSpace(10),
-              const SampleContainer(),
+              NewsCard(imgSrc: Constants.dummyImg, title: 'How can I be Flutter Developer Expert?', desc: 'Jill Lepore * 23 May 2023'),
               UIHelper.verticalSpace(30),
               const TitleSectionText(
                 'COLUMN',
@@ -43,9 +45,9 @@ class DummyPage extends StatelessWidget {
               UIHelper.verticalSpace(10),
               Column(
                 children: [
-                  const SampleContainer(),
+                  NewsCard(imgSrc: Constants.dummyImg, title: 'How can I be Flutter Developer Expert?', desc: 'Jill Lepore * 23 May 2023'),
                   UIHelper.verticalSpace(10),
-                  const SampleContainer()
+                  NewsCard(imgSrc: Constants.dummyImg, title: 'How can I be Flutter Developer Expert?', desc: 'Jill Lepore * 23 May 2023'),
                 ],
               ),
               UIHelper.verticalSpace(30),
@@ -55,11 +57,11 @@ class DummyPage extends StatelessWidget {
               UIHelper.verticalSpace(10),
               Row(
                 children: [
-                  const Flexible(child: GridSampleContainerCard(title: 'Container 1')),
+                  const Flexible(child: DummyGridCard(title: 'Container 1'),),
                   UIHelper.horizontalSpace(10),
-                  const Flexible(child: GridSampleContainerCard(title: 'Container 2')),
+                  const Flexible(child: DummyGridCard(title: 'Container 2'),),
                   UIHelper.horizontalSpace(10),
-                  const Flexible(child: GridSampleContainerCard(title: 'Container 3')),
+                  const Flexible(child: DummyGridCard(title: 'Container 3'),),
                 ],
               ),
               UIHelper.verticalSpace(30),
@@ -71,7 +73,7 @@ class DummyPage extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {}, 
-                  child: const Text('SUBMIT')
+                  child: const Text('SUBMIT'),
                 ),
               ),
               UIHelper.verticalSpace(30),
@@ -91,9 +93,9 @@ class DummyPage extends StatelessWidget {
               UIHelper.verticalSpace(10),
               Row(
                 children: [
-                  const Expanded(child: GridSampleContainerCard(title: 'Container 1')),
+                  const Expanded(child: DummyGridCard(title: 'Container 1')),
                   UIHelper.horizontalSpace(10),
-                  const GridSampleContainerCard(title: 'Container 2'),
+                  const DummyGridCard(title: 'Container 2'),
                 ],
               )
             ],

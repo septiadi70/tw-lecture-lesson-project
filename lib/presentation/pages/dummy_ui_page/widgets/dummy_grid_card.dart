@@ -1,14 +1,14 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:trinity_lecture_app/core/commons/colors_const.dart';
 import 'package:trinity_lecture_app/core/commons/constants.dart';
-import 'package:trinity_lecture_app/core/commons/theme.dart';
+import 'package:trinity_lecture_app/presentation/widgets/atoms/text_theme_extension.dart';
 import 'package:trinity_lecture_app/presentation/widgets/organisms/ui_helper.dart';
 
-class GridSampleContainerCard extends StatelessWidget {
+class DummyGridCard extends StatelessWidget {
   final String title;
   final int flex;
-
-  const GridSampleContainerCard({super.key, required this.title, this.flex = 1});
+  
+  const DummyGridCard({super.key, required this.title, this.flex = 1});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class GridSampleContainerCard extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: AppTheme.textTheme.labelSmall,
+                style: context.textTheme.labelSmall,
               ),
             ),
           ],
@@ -46,4 +46,5 @@ class GridSampleContainerCard extends StatelessWidget {
       ),
     );
   }
+
 }
