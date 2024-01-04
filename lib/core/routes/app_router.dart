@@ -7,6 +7,7 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> routes = [
     AutoRoute(page: MainRoute.page, initial: true),
     AutoRoute(page: DummyUIFirstRoute.page),
-    AutoRoute(page: DummyUISecondRoute.page)
+    AutoRoute(page: DummyUISecondRoute.page),
+    AutoRoute(page: CounterAppRoute.page)
   ];
 }
