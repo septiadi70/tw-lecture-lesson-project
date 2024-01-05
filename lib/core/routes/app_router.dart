@@ -8,6 +8,7 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: MainRoute.page, initial: true),
     AutoRoute(page: DummyUIFirstRoute.page),
     AutoRoute(page: DummyUISecondRoute.page),
-    AutoRoute(page: CounterAppRoute.page)
+    AutoRoute(page: CounterAppRoute.page),
+    AutoRoute(page: InputValidationRoute.page),
   ];
 }

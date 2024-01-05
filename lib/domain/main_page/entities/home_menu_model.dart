@@ -16,7 +16,7 @@ class HomeMenuModel {
     return [
       const HomeMenuModel(title: 'Dummy UI', desc: 'Introducing basic flutter widget UI', routePath: DummyUIFirstRoute()),
       const HomeMenuModel(title: 'Counter Example (State Management)', desc: 'Introducing of state management using flutter_bloc. Level: 1', routePath: CounterAppRoute()),
-      const HomeMenuModel(title: 'Input Validation Example (State Management)', desc: 'Flutter state management using flutter_bloc to handle validation in text field. Level: 2'),
+      const HomeMenuModel(title: 'Input Validation Example (State Management)', desc: 'Flutter state management using flutter_bloc to handle validation in text field. Level: 2', routePath: InputValidationRoute()),
       const HomeMenuModel(title: 'Calculator Example (State Management)', desc: 'Flutter state management using flutter_bloc to calculate simple syntax. Level 3'),
       const HomeMenuModel(title: 'News App', desc: 'API calling using free source from NYTimes'),
       const HomeMenuModel(title: 'To Do App', desc: 'Create a to do list that saved in local storage using hydrated_bloc. Level: 4'),
