@@ -8,10 +8,7 @@ import 'package:trinity_lecture_app/presentation/widgets/organisms/ui_helper.dar
 
 @RoutePage()
 class InputValidationPage extends StatefulWidget {
-  final String? name;
-  final String? email;
-
-  const InputValidationPage({super.key, this.name, this.email});
+  const InputValidationPage({super.key});
 
   @override
   State<InputValidationPage> createState() => _InputValidationPageState();
@@ -64,7 +61,6 @@ class _InputValidationPageState extends State<InputValidationPage> {
                     preffixIcon: SvgPicture.asset('assets/svgs/user_icon.svg'),
                     title: 'Name',
                     controller: _nameTextController,
-                    initialValue: widget.name,
                     validator: (text) {
                       if (text == null || text.isEmpty) return 'Name cannot be empty';
                       return null;
@@ -76,7 +72,6 @@ class _InputValidationPageState extends State<InputValidationPage> {
                     preffixIcon: SvgPicture.asset('assets/svgs/email_icon.svg'),
                     title: 'Email',
                     controller: _emailTextController,
-                    initialValue: widget.email,
                     validator: (text) {
                       if (text == null || text.isEmpty) return 'Email cannot be empty';
                       return null;
