@@ -37,7 +37,7 @@ class NewsSectionTitleText extends StatelessWidget {
                   buttonText!,
                   style: context.textTheme.bodyLarge?.copyWith(
                     color: ColorConstant.primary,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -46,7 +46,7 @@ class NewsSectionTitleText extends StatelessWidget {
         Text(
           subtitle,
           style: context.textTheme.bodyLarge?.copyWith(
-            color: ColorConstant.grey
+            color: ColorConstant.grey,
           ),
         ),
       ],

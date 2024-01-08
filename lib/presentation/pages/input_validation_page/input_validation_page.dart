@@ -32,10 +32,11 @@ class _InputValidationPageState extends State<InputValidationPage> {
       appBar: AppBar(
         title: const Text('Input Validation'),
       ),
+      resizeToAvoidBottomInset: false,
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: UIHelper.padding(vertical: 10, horizontal: 20),
+          padding: UIHelper.padding(vertical: 10, horizontal: 20,),
           child: Stack(
             children: [
               Column(
@@ -55,7 +56,7 @@ class _InputValidationPageState extends State<InputValidationPage> {
                       color: ColorConstant.grey,
                     ),
                   ),
-                  UIHelper.verticalSpace(30),
+                  UIHelper.verticalSpace(30,),
                   TextFormFieldCustom(
                     hintText: 'Enter your name...',
                     preffixIcon: SvgPicture.asset('assets/svgs/user_icon.svg'),
@@ -66,7 +67,7 @@ class _InputValidationPageState extends State<InputValidationPage> {
                       return null;
                     },
                   ),
-                  UIHelper.verticalSpace(20),
+                  UIHelper.verticalSpace(20,),
                   TextFormFieldCustom(
                     hintText: 'Enter your email...',
                     preffixIcon: SvgPicture.asset('assets/svgs/email_icon.svg'),
@@ -91,7 +92,7 @@ class _InputValidationPageState extends State<InputValidationPage> {
                       );
                     }
                   },
-                  child: const Text('SUBMIT')
+                  child: const Text('SUBMIT',),
                 ),
               ),
             ],

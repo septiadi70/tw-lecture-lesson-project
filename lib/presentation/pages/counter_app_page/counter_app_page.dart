@@ -18,10 +18,10 @@ class _CounterAppPageState extends State<CounterAppPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Counter App'),
+        title: const Text('Counter App',),
       ),
       body: Center(
-        child: Text('$_counter'),
+        child: Text('$_counter',),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

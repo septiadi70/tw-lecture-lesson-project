@@ -42,7 +42,7 @@ class _SimpleCalculatorPageState extends State<SimpleCalculatorPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Simple Calculator'),
+          title: const Text('Simple Calculator',),
         ),
         resizeToAvoidBottomInset: false,
         body: Padding(
@@ -51,8 +51,8 @@ class _SimpleCalculatorPageState extends State<SimpleCalculatorPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const TitleSectionText('CHOOSE TYPE'),
-              UIHelper.verticalSpace(10),
+              const TitleSectionText('CHOOSE TYPE',),
+              UIHelper.verticalSpace(10,),
               Wrap(
                 children: _operations.map((e) {
                   return Padding(
@@ -85,14 +85,14 @@ class _SimpleCalculatorPageState extends State<SimpleCalculatorPage> {
                             keyboardType: TextInputType.number,
                           ),
                         ),
-                        UIHelper.horizontalSpace(10),
+                        UIHelper.horizontalSpace(10,),
                         Text(
                           _operationSelected?.value ?? '',
                           style: context.textTheme.displayLarge?.copyWith(
-                            fontSize: 30
+                            fontSize: 30,
                           ),
                         ),
-                        UIHelper.horizontalSpace(10),
+                        UIHelper.horizontalSpace(10,),
                         SizedBox(
                           width: 80,
                           child: TextFormFieldCustom(
@@ -100,27 +100,27 @@ class _SimpleCalculatorPageState extends State<SimpleCalculatorPage> {
                             keyboardType: TextInputType.number,
                           ),
                         ),
-                        UIHelper.horizontalSpace(10),
+                        UIHelper.horizontalSpace(10,),
                         Text(
                           '=',
                           style: context.textTheme.displayLarge?.copyWith(
-                            fontSize: 30
+                            fontSize: 30,
                           ),
                         ),
-                        UIHelper.horizontalSpace(10),
+                        UIHelper.horizontalSpace(10,),
                         Text(
                           _calculationValue != null ? _formatDoubleValue(_calculationValue!) : '. . .',
                           style: context.textTheme.displayLarge?.copyWith(
-                            fontSize: 30
+                            fontSize: 30,
                           ),
                         ),
                       ],
                     ),
-                    UIHelper.verticalSpace(20),
+                    UIHelper.verticalSpace(20,),
                     Container(
                       decoration: BoxDecoration(
                         color: ColorConstant.lightGreen,
-                        borderRadius: UIHelper.borderRadiusCircular(all: 10)
+                        borderRadius: UIHelper.borderRadiusCircular(all: 10),
                       ),
                       child: Padding(
                         padding: UIHelper.padding(all: 10),
@@ -131,7 +131,7 @@ class _SimpleCalculatorPageState extends State<SimpleCalculatorPage> {
                               color: ColorConstant.green,
                               size: 20,
                             ),
-                            UIHelper.horizontalSpace(10),
+                            UIHelper.horizontalSpace(10,),
                             Expanded(
                               child: Text(
                                 'Press calculate button to get the result',
@@ -139,16 +139,16 @@ class _SimpleCalculatorPageState extends State<SimpleCalculatorPage> {
                                   color: ColorConstant.grey,
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ],
                 ),
-              UIHelper.verticalSpace(20),
-              const TitleSectionText('HISTORY'),
-              UIHelper.verticalSpace(10),
+              UIHelper.verticalSpace(20,),
+              const TitleSectionText('HISTORY',),
+              UIHelper.verticalSpace(10,),
               Expanded(
                 child: _history.isNotEmpty ? ListView.builder(
                   itemCount: _history.length,
@@ -174,10 +174,10 @@ class _SimpleCalculatorPageState extends State<SimpleCalculatorPage> {
                   ),
                 ),
               ),
-              UIHelper.verticalSpace(10),
+              UIHelper.verticalSpace(10,),
               ElevatedButton(
                 onPressed: () => _calculate(),
-                child: const Text('CALCULATE')
+                child: const Text('CALCULATE',),
               ),
             ],
           ),

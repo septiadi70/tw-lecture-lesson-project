@@ -31,9 +31,9 @@ class SimpleCalculatorHistoryCard extends StatelessWidget {
             TextButton(
               onPressed: onPressed,
               child: const Text(
-                'Re-Apply'
+                'Re-Apply',
               ),
-            )
+            ),
           ],
         ),
         const Divider(

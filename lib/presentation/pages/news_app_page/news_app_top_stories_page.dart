@@ -68,7 +68,7 @@ class _NewsAppTopStoriesPageState extends State<NewsAppTopStoriesPage> {
                     );
                   }).toList(),
                 ),
-              )
+              ),
             ),
           ],
         ),
@@ -82,7 +82,7 @@ class _NewsAppTopStoriesPageState extends State<NewsAppTopStoriesPage> {
                   child: Text(
                     'SECTION',
                     style: context.textTheme.headlineMedium?.copyWith(
-                      color: ColorConstant.grey
+                      color: ColorConstant.grey,
                     ),
                   ),
                 ),
@@ -112,7 +112,7 @@ class _NewsAppTopStoriesPageState extends State<NewsAppTopStoriesPage> {
                     child: NewsCard(
                       imgSrc: article.multimediaConverted, 
                       title: article.title, 
-                      desc: '${article.byline} * ${article.publishedDateConverted}'
+                      desc: '${article.byline} * ${article.publishedDateConverted}',
                     ),
                   );
                 },

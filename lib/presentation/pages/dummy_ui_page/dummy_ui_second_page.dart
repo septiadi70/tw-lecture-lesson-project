@@ -39,9 +39,10 @@ class DummyUISecondPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: UIHelper.padding(all: 10),
-                  child: NewsCard(imgSrc: Constants.dummyImg, title: 'How can I be Flutter Developer Expert?', desc: 'Jill Lepore * 23 May 2023'),
+                  child: NewsCard(imgSrc: Constants.dummyImg, title: 'How can I be Flutter Developer Expert?', desc: 'Jill Lepore * 23 May 2023',),
                 );
-            },),
+              },
+            ),
             Padding(
               padding: UIHelper.padding(all: 10),
               child: GridView.count(

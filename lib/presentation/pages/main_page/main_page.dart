@@ -22,7 +22,7 @@ class MainPage extends StatelessWidget {
                 if (menu.routePath != null) AutoRouter.of(context).push(menu.routePath!);
               }, 
               title: menu.title, 
-              desc: menu.desc
+              desc: menu.desc,
             );
           },
         ),

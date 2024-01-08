@@ -58,7 +58,7 @@ class _NewsAppPageState extends State<NewsAppPage> {
                     child: Text(
                       'Go To Categories Section',
                       style: context.textTheme.bodySmall?.copyWith(
-                        color: ColorConstant.primary
+                        color: ColorConstant.primary,
                       ),
                     ),
                   ),
@@ -89,7 +89,7 @@ class _NewsAppPageState extends State<NewsAppPage> {
                     child: NewsCard(
                       imgSrc: article.multimediaConverted, 
                       title: article.title, 
-                      desc: '${article.byline} * ${article.publishedDateConverted}'
+                      desc: '${article.byline} * ${article.publishedDateConverted}',
                     ),
                   );
                 },

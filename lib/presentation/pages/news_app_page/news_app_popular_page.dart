@@ -39,11 +39,11 @@ class _NewsAppPopularPageState extends State<NewsAppPopularPage> {
           itemBuilder: (context, index) {
             final article = _articles[index];
             return Padding(
-              padding: UIHelper.padding(vertical: 5),
+              padding: UIHelper.padding(vertical: 5,),
               child: NewsCard(
                 imgSrc: article.multimediaConverted, 
                 title: article.title, 
-                desc: '${article.byline} * ${article.publishedDateConverted}'
+                desc: '${article.byline} * ${article.publishedDateConverted}',
               ),
             );
           },
