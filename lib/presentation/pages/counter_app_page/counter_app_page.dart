@@ -1,55 +1,55 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:trinity_lecture_app/presentation/widgets/atoms/text_theme_extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trinity_lecture_app/presentation/pages/counter_app_page/counter_app_cubit.dart';
 import 'package:trinity_lecture_app/presentation/widgets/organisms/ui_helper.dart';
 
 @RoutePage()
-class CounterAppPage extends StatefulWidget {
+class CounterAppPage extends StatelessWidget {
   const CounterAppPage({super.key});
 
   @override
-  State<CounterAppPage> createState() => _CounterAppPageState();
-}
-
-class _CounterAppPageState extends State<CounterAppPage> {
-  int _counter = 0;
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Counter App',),
-      ),
-      body: Center(
-        child: Text('$_counter',),
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              setState(() => _counter += 1);
-            },
-            heroTag: null,
-            child: Text(
-              '+',
-              style: context.textTheme.displayMedium,
+    // final textTheme = Theme.of(context).textTheme;
+    return BlocProvider(
+      create: (_) => CounterAppCubit(),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Counter App',),
+              leading: IconButton(
+                onPressed: () {
+                  AutoRouter.of(context).pop();
+                }, 
+                icon: const Icon(Icons.arrow_back_ios_new_rounded)
+              ),
             ),
-          ),
-          UIHelper.verticalSpace(10,),
-          FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                if (_counter > 0) _counter -= 1;
-              });
-            },
-            heroTag: null,
-            child: Text(
-              '-',
-              style: context.textTheme.displayMedium,
+            body: Center(
+              child: BlocBuilder<CounterAppCubit, int>(
+                builder: (context, state) {
+                  return Text('$state',);
+                },
+              ),
             ),
-          ),
-        ],
+            floatingActionButton: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FloatingActionButton(
+                  onPressed: () => context.read<CounterAppCubit>().increment(),
+                  heroTag: null,
+                  child: const Icon(Icons.add),
+                ),
+                UIHelper.verticalSpace(10,),
+                FloatingActionButton(
+                  onPressed: () => context.read<CounterAppCubit>().decrement(),
+                  heroTag: null,
+                  child: const Icon(Icons.remove),
+                ),
+              ],
+            ),
+          );
+        }
       ),
     );
   }
