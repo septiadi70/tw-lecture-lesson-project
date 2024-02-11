@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trinity_lecture_app/core/commons/colors_const.dart';
-import 'package:trinity_lecture_app/domain/simple_calculator/entities/simple_calculator_history_model.dart';
+import 'package:trinity_lecture_app/presentation/pages/simple_calculator_page/calculator_cubit.dart';
+import 'package:trinity_lecture_app/presentation/pages/simple_calculator_page/calculator_state.dart';
+import 'package:trinity_lecture_app/presentation/pages/simple_calculator_page/calculator_type.dart';
 import 'package:trinity_lecture_app/presentation/pages/simple_calculator_page/widgets/simple_calculator_history_card.dart';
 import 'package:trinity_lecture_app/presentation/widgets/atoms/text_theme_extension.dart';
 import 'package:trinity_lecture_app/presentation/widgets/atoms/title_section_text.dart';
@@ -10,240 +13,187 @@ import 'package:trinity_lecture_app/presentation/widgets/organisms/text_form_fie
 import 'package:trinity_lecture_app/presentation/widgets/organisms/ui_helper.dart';
 
 @RoutePage()
-class SimpleCalculatorPage extends StatefulWidget {
+class SimpleCalculatorPage extends StatelessWidget {
   const SimpleCalculatorPage({super.key});
 
   @override
-  State<SimpleCalculatorPage> createState() => _SimpleCalculatorPageState();
-}
-
-class _SimpleCalculatorPageState extends State<SimpleCalculatorPage> {
-  final _operations = [
-    SimpleCalculationType.plus, 
-    SimpleCalculationType.substract, 
-    SimpleCalculationType.multiply,
-    SimpleCalculationType.divide,
-    SimpleCalculationType.pow
-  ];
-  SimpleCalculationType? _operationSelected;
-  final _firstNumberTextController = TextEditingController();
-  final _secondNumberTextController = TextEditingController();
-  double? _calculationValue;
-  final List<SimpleCalculatorHistoryModel> _history = [];
-
-  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Simple Calculator',),
-        ),
-        resizeToAvoidBottomInset: false,
-        body: Padding(
-          padding: UIHelper.padding(all: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const TitleSectionText('CHOOSE TYPE',),
-              UIHelper.verticalSpace(10,),
-              Wrap(
-                children: _operations.map((e) {
-                  return Padding(
-                    padding: UIHelper.padding(all: 5),
-                    child: ChipCustom(
-                      onTap: () {
-                        setState(() {
-                          _operationSelected = e;
-                          _firstNumberTextController.text = '';
-                          _secondNumberTextController.text = '';
-                          _calculationValue = 0;
-                        });
-                      }, 
-                      title: e.label,
-                      isChoosen: _operationSelected == e,
-                    ),
-                  );
-                }).toList(),
-              ),
-              UIHelper.verticalSpace(20),
-              if (_operationSelected != null)
-                Column(
-                  children: [
-                    Row(
+    return BlocProvider(
+      create: (context) => CalculatorCubit(),
+      child: Builder(
+        builder: (context) {
+          return BlocBuilder<CalculatorCubit, CalculatorState>(
+            builder: (context, state) {
+              return GestureDetector(
+                onTap: () {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.unfocus();
+                  }
+                },
+                child: Scaffold(
+                  appBar: AppBar(
+                    title: const Text('Simple Calculator',),
+                  ),
+                  resizeToAvoidBottomInset: false,
+                  body: SingleChildScrollView(
+                    padding: UIHelper.padding(vertical: 20, horizontal: 20,),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(
-                          width: 80,
-                          child: TextFormFieldCustom(
-                            controller: _firstNumberTextController,
-                            keyboardType: TextInputType.number,
-                          ),
+                        const TitleSectionText('CHOOSE TYPE',),
+                        UIHelper.verticalSpace(20,),
+                        Wrap(
+                          spacing: 10,
+                          runSpacing: 10,
+                          children: [
+                            ChipCustom(
+                              isChoosen: state.choosenType(const CalculatorType.add()),
+                              title: 'Add',
+                              onTap: () => context.read<CalculatorCubit>().chooseType(const CalculatorType.add()),
+                            ),
+                            ChipCustom(
+                              isChoosen: state.choosenType(const CalculatorType.substract()),
+                              title: 'Substract',
+                              onTap: () => context.read<CalculatorCubit>().chooseType(const CalculatorType.substract()),
+                            ),
+                            ChipCustom(
+                              isChoosen: state.choosenType(const CalculatorType.multiply()),
+                              title: 'Multiply',
+                              onTap: () => context.read<CalculatorCubit>().chooseType(const CalculatorType.multiply()),
+                            ),
+                            ChipCustom(
+                              isChoosen: state.choosenType(const CalculatorType.divide()),
+                              title: 'Divide',
+                              onTap: () => context.read<CalculatorCubit>().chooseType(const CalculatorType.divide()),
+                            ),
+                            ChipCustom(
+                              isChoosen: state.choosenType(const CalculatorType.pow()),
+                              title: 'Pow',
+                              onTap: () => context.read<CalculatorCubit>().chooseType(const CalculatorType.pow()),
+                            ),
+                          ]
                         ),
-                        UIHelper.horizontalSpace(10,),
+                        UIHelper.verticalSpace(20),
+                        if (!state.typeNotChoosen)
+                          Column(
+                            children: [
+                              UIHelper.verticalSpace(20),
+                              Row(
+                                crossAxisAlignment: state.choosenType(const CalculatorType.pow()) ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: UIHelper.setSp(60),
+                                    child: TextFormFieldCustom(
+                                      controller: context.read<CalculatorCubit>().leftController,
+                                      keyboardType: TextInputType.number,
+                                      textAlign: TextAlign.center,
+                                      style: context.textTheme.displayLarge,
+                                    ),
+                                  ),
+                                  UIHelper.horizontalSpace(10,),
+                                  if (state.equationText(state.model.type).isNotEmpty) ... [
+                                    Text(
+                                      state.equationText(state.model.type),
+                                      style: context.textTheme.displayLarge?.copyWith(
+                                        fontSize: UIHelper.setSp(30),
+                                      ),
+                                    ),
+                                    UIHelper.horizontalSpace(10,),
+                                  ],
+                                  SizedBox(
+                                    width: UIHelper.setSp(60),
+                                    child: TextFormFieldCustom(
+                                      controller: context.read<CalculatorCubit>().rightController,
+                                      keyboardType: TextInputType.number,
+                                      textAlign: TextAlign.center,
+                                      style: context.textTheme.displayLarge,
+                                    ),
+                                  ),
+                                  UIHelper.horizontalSpace(10,),
+                                  Text(
+                                    '= ${state.displayValue}',
+                                    style: context.textTheme.displayLarge?.copyWith(
+                                      fontSize: UIHelper.setSp(40),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              UIHelper.verticalSpace(20,),
+                              Container(
+                                padding: UIHelper.padding(vertical: 10, horizontal: 15,),
+                                decoration: BoxDecoration(
+                                  color: ColorConstant.lightGreen,
+                                  borderRadius: UIHelper.borderRadiusCircular(all: 5),
+                                ),
+                                child: Padding(
+                                  padding: UIHelper.padding(all: 10),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.info_outline_rounded,
+                                        color: state.showErrorMsg == null ? ColorConstant.green : ColorConstant.red,
+                                      ),
+                                      UIHelper.horizontalSpace(10,),
+                                      Expanded(
+                                        child: Text(
+                                          state.showErrorMsg ?? 'Press calculate button to get the result',
+                                          style: context.textTheme.bodySmall?.copyWith(
+                                            color: state.showErrorMsg == null ? ColorConstant.grey : ColorConstant.red,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        UIHelper.verticalSpace(20,),
+                        const TitleSectionText('HISTORY',),
+                        UIHelper.verticalSpace(10,),
+                        state.model.histories.isEmpty ?
                         Text(
-                          _operationSelected?.value ?? '',
-                          style: context.textTheme.displayLarge?.copyWith(
-                            fontSize: 30,
+                          'No history found',
+                          style: context.textTheme.bodySmall?.copyWith(
+                            fontStyle: FontStyle.italic,
+                            color: ColorConstant.grey,
                           ),
-                        ),
-                        UIHelper.horizontalSpace(10,),
-                        SizedBox(
-                          width: 80,
-                          child: TextFormFieldCustom(
-                            controller: _secondNumberTextController,
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                        UIHelper.horizontalSpace(10,),
-                        Text(
-                          '=',
-                          style: context.textTheme.displayLarge?.copyWith(
-                            fontSize: 30,
-                          ),
-                        ),
-                        UIHelper.horizontalSpace(10,),
-                        Text(
-                          _calculationValue != null ? _formatDoubleValue(_calculationValue!) : '. . .',
-                          style: context.textTheme.displayLarge?.copyWith(
-                            fontSize: 30,
-                          ),
+                        ) :
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: state.model.histories.length,
+                          itemBuilder: (context, index) {
+                            final history = state.model.histories[index];
+                            return Padding(
+                              padding: UIHelper.padding(vertical: 5),
+                              child: SimpleCalculatorHistoryCard(
+                                text: state.historyText(history), 
+                                onPressed: () {
+                                  context.read<CalculatorCubit>().restoreHistory(history);
+                                },
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
-                    UIHelper.verticalSpace(20,),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: ColorConstant.lightGreen,
-                        borderRadius: UIHelper.borderRadiusCircular(all: 10),
-                      ),
-                      child: Padding(
-                        padding: UIHelper.padding(all: 10),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.info_outline,
-                              color: ColorConstant.green,
-                              size: 20,
-                            ),
-                            UIHelper.horizontalSpace(10,),
-                            Expanded(
-                              child: Text(
-                                'Press calculate button to get the result',
-                                style: context.textTheme.bodyLarge?.copyWith(
-                                  color: ColorConstant.grey,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                  ),
+                  bottomNavigationBar: Container(
+                    margin: UIHelper.padding(horizontal: 10, vertical: 20),
+                    child: ElevatedButton(
+                      onPressed: () => context.read<CalculatorCubit>().submit(),
+                      child: const Text('CALCULATE',),
                     ),
-                  ],
-                ),
-              UIHelper.verticalSpace(20,),
-              const TitleSectionText('HISTORY',),
-              UIHelper.verticalSpace(10,),
-              Expanded(
-                child: _history.isNotEmpty ? ListView.builder(
-                  itemCount: _history.length,
-                  itemBuilder: (context, index) {
-                    final calculate = _history[index];
-                    return Padding(
-                      padding: UIHelper.padding(vertical: 5),
-                      child: SimpleCalculatorHistoryCard(
-                        text: calculate.getLabel(), 
-                        onPressed: () {
-                          _firstNumberTextController.text = calculate.firstNumber;
-                          _secondNumberTextController.text = calculate.secondNumber;
-                          setState(() => _operationSelected = calculate.type);
-                        },
-                      ),
-                    );
-                  },
-                ) : Text(
-                  'No history found',
-                  style: context.textTheme.bodySmall?.copyWith(
-                    fontStyle: FontStyle.italic,
-                    color: ColorConstant.grey,
                   ),
                 ),
-              ),
-              UIHelper.verticalSpace(10,),
-              ElevatedButton(
-                onPressed: () => _calculate(),
-                child: const Text('CALCULATE',),
-              ),
-            ],
-          ),
-        ),
+              );
+            },
+          );
+        },
       ),
     );
   }
-
-  String _formatDoubleValue(double value) {
-    RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
-    return value.toString().replaceAll(regex, '');
-  }
-
-  void _calculate() {
-    if (_operationSelected == null) return;
-
-    final firstNumber = double.tryParse(_firstNumberTextController.text);
-    final secondNumber = double.tryParse(_secondNumberTextController.text);
-
-    if (firstNumber == null || secondNumber == null) return;
-
-    switch (_operationSelected) {
-      case SimpleCalculationType.plus:
-        _calculationValue = firstNumber + secondNumber;
-        break;
-
-      case SimpleCalculationType.substract:
-        _calculationValue = firstNumber - secondNumber;
-        break;
-
-      case SimpleCalculationType.multiply:
-        _calculationValue = firstNumber * secondNumber;
-        break;
-
-      case SimpleCalculationType.divide:
-        _calculationValue = firstNumber / secondNumber;
-        break;
-
-      case SimpleCalculationType.pow:
-        _calculationValue = firstNumber % secondNumber;
-        break;
-
-      default:
-    }
-
-    setState(() {
-      _history.add(
-        SimpleCalculatorHistoryModel(
-          firstNumber: _firstNumberTextController.text, 
-          secondNumber: _secondNumberTextController.text, 
-          type: _operationSelected!
-        )
-      );
-    });
-  }
-}
-
-enum SimpleCalculationType {
-  plus('Add', '+'),
-  substract('Substract', '-'),
-  multiply('Multiply', 'X'),
-  divide('Divide', '/'),
-  pow('Pow', '^');
-
-  const SimpleCalculationType(this.label, this.value);
-
-  final String label;
-  final String value;
 }
